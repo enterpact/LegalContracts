@@ -1,0 +1,37 @@
+
+
+#contract_name {
+    padding-top: 6%;
+}
+
+#Parties_h5 {
+    padding-top: 6%;
+}
+
+h6.parties_h6 {
+    text-decoration: underline;
+}
+
+#nego {
+    text-decoration: bold;
+}
+
+#document_details_h5 {
+    padding-top: 6%;
+}
+
+#Deploy_button {
+    color: orange;
+}
+
+#update_on_click {
+    color: silver;
+}
+
+#upload_on_click {
+    color: silver;
+}
+
+#title {
+    text-shadow: 1px 1px 1px #0000FF, 1px 2px 2px #FF0000;
+}
