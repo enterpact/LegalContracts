@@ -1,15 +1,15 @@
-#Legal Contracts on Ethereum
+# Legal Contracts on Ethereum
 This application was created for the use to two people or groups to sign a digital contract on the Ethereum blockchain without the need of a 3rd party.
 The file that both people sign is uploaded to IPFS and can be downloaded from a link listed when viewing the contract information.
 
 The application runs solely in the browser.  For each pending and current contract that both parties must sign, an Ethereum digital contract must be deployed.  
 
 
-##Tested Environments
-The development for this application has only been tested on OSX and the application has only been tested to run on Google Chrome.
+## Tested Environments
+The development for this application has only been tested on **OSX** and the application has only been tested to run on **Google Chrome**.
 
 
-##Development
+## Development
 When developing for this application, you must run 2 commands before it can be deployed to a server.
 
 1.
