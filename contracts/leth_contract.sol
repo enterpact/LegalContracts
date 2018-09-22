@@ -4,7 +4,6 @@ pragma solidity ^0.4.24;
 /// @author Mark Focella
 
 
-//find the newest version of solidity above
 contract TwoPartyLegalContract{
 
     enum Status { signed, reviewing, negotiating, rejected }
@@ -43,7 +42,6 @@ contract TwoPartyLegalContract{
         partiesAddresses[1] = party2;
         parties[partiesAddresses[0]] = Party("Name Me","",Status.negotiating);
         parties[partiesAddresses[1]] = Party("Name Me","",Status.negotiating);
-        //This returns an address for the contract if successful
     }
 
     modifier onlyParties() {
@@ -55,7 +53,6 @@ contract TwoPartyLegalContract{
         /// @notice Updates address, name, email and status of a party
         require (bytes(name).length != 0, "The name must not be empty");
         require (mainContract.signed == false, "The contract has been signed no further modifications allowed");
-        //do error handling in javascript for address that isn't the right length of public address
         if (bytes(parties[adr].name).length == 0){
             parties[adr] = parties[msg.sender];
             if (msg.sender == partiesAddresses[0]) {
@@ -80,7 +77,7 @@ contract TwoPartyLegalContract{
 
     function updateDocument(string hash) onlyParties public returns(bool){
         /// @notice Updates document hash, name and version number
-        require (checkStatuses(Status.negotiating) == true, "Document is Locked.  Both Parties status is not negotiating");
+        require (checkStatuses(Status.negotiating) == true, "Document is Locked.  Both Parties statuses are not negotiating");
         contractFile.version_number += 1;
         contractFile.last_updated = block.timestamp;
         contractFile.filehash = hash;

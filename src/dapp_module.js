@@ -1,7 +1,4 @@
-//file for main javascript
-
-//var Web3 = require('web3');
-//import Web3 from 'web3';
+//file for Dapp javascript module
 
 //var $ = require('jquery');
 var ipfsAPI = require('ipfs-api');
@@ -31,7 +28,6 @@ var compiledcontract;
 
 
 
-//find out how to test the javascript functions and solidity functions by writing tests
 window.Dapp = {
 
     CleanNotifications: function(delaytime=5000) {
@@ -42,33 +38,19 @@ window.Dapp = {
         }, delaytime);
     },
 
-
     VerifyIPFS: function() {
         ipfs.id(function(error, result) {
             if (error) {
+                document.getElementById("update_notifications").innerHTML = "<p>There was an error Connecting to IPFS.</p>";
                 console.log("There was an error Connecting to IPFS: " + error);
             }
             else
             {
+                document.getElementById("update_notifications").innerHTML = "<p>Connected to IPFS.</p>";
                 console.log("Connected to IPFS node: ", result.id, result.agentVersion, result.protocolVersion);
             }
         })
-    },
-
-    AddFileIPFSP: function(file) {
-        return new Promise(resolve => {
-            ipfs.files.add(file, function(error, files){
-                if (error){
-                    console.log("There was an error uploading the file which is: " + error);
-                    //alert("There was an error uploading the file to IPFS");
-                    document.getElementById("upload_notifications").innerHTML = "<p>There was an error when uploading the document to IPFS.</p>";
-                }
-                else {
-                    console.log("Added file to IPFS.  Resulting with hash: " + files[0].hash + " and size: " + files[0].size.toString() + " and path: " + files[0].path);
-                    resolve(files[0].hash)
-                }
-            })
-        })
+        CleanNotifications();
     },
 
     AddFileIPFS: function(file) {
@@ -79,7 +61,6 @@ window.Dapp = {
                ipfs.files.add(buffer, function(error, files){
                    if (error){
                        console.log("There was an error uploading the file which is: " + error);
-                       //alert("There was an error uploading the file to IPFS");
                        document.getElementById("upload_notifications").innerHTML = "<p>There was an error when uploading the document to IPFS.</p>";
                    }
                    else {
@@ -130,7 +111,6 @@ window.Dapp = {
         var myLegalContract = LegalContract.at(mainContractAddress)
         var commands = cmds
         if (commands.parties_addresses_f == null) { commands.parties_addresses_f = function(data){ console.log("")} }
-        //convert below to use async await instead of callbacks
         if (commands.main_contract_f != null) {
             myLegalContract.mainContract.call( function(error,response) {
                 if (error) {
@@ -199,7 +179,6 @@ window.Dapp = {
                 }
             })
         }
-        //main_contract_time_created: new Date(m_contract.main_contract_time_created * 1000).format('yyyy/MM/dd HH:mm:ss'),
         // test contract address 0x9be5ad1be7f96e5337193c75f63362d9fd8d0426
     },
 
@@ -222,11 +201,9 @@ window.Dapp = {
         Dapp.CleanNotifications();
     },
 
-
     ClickUploadTab: function() {
         document.getElementById("document_upload_status").innerHTML = "<p>Checking Document Upload Status</p>"
         var contractaddress = document.getElementById("contract_address")
-        //make parties a .then to get the parties details after the partiesaddresses have been grabbed
         var partiesupdates = function(data){
             data.status = Dapp.ConvertStatus(data.status)
             if(data.address == web3.eth.accounts[0]) {
@@ -271,7 +248,6 @@ window.Dapp = {
                 console.log("Grabbed current parties details."); document.getElementById("name_update").value = data.name; document.getElementById("email_update").value = data.email; document.getElementById("address_update").value = data.address; document.getElementById("status_update").value = data.status;
             }
         }
-        // pass in only the fields which have functions needed the UseDataFromContract method will set default parameters and check if method is empty
         htmlupdates = { parties_f: partiesupdates }
         Dapp.UseDataFromContract(htmlupdates)
         Dapp.CleanNotifications();
@@ -307,12 +283,9 @@ window.Dapp = {
 }
 
 window.addEventListener("load", function() {
-    //window.jquery = $;
-    //window.$ = $;
     ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'});
     console.log("gas estimate for deploying contract are 666800 for deployment")
     Dapp.VerifyIPFS();
     Dapp.CleanNotifications();
     web3 = new Web3(window.web3.currentProvider)
-    //$('#update_notifications').innerHTML = "<p>Dapp Initialized</p>";
 });
