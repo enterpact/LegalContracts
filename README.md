@@ -1,5 +1,5 @@
 # Legal Contracts on Ethereum
-This application was created for the use to two people or groups to sign a digital contract on the Ethereum blockchain without the need of a 3rd party.
+This application was created so that two people or groups can sign a digital contract on the Ethereum blockchain without the need of a 3rd party.
 The file that both people sign is uploaded to IPFS and can be downloaded from a link listed when viewing the contract information.
 
 The application runs solely in the browser.  For each pending and current contract that both parties must sign, an Ethereum digital contract must be deployed.  
