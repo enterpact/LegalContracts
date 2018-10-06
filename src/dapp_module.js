@@ -1,6 +1,5 @@
 //file for Dapp javascript module
 
-//var $ = require('jquery');
 var ipfsAPI = require('ipfs-api');
 var Buffer = require('buffer/').Buffer
 var ipfs;
@@ -50,7 +49,7 @@ window.Dapp = {
                 console.log("Connected to IPFS node: ", result.id, result.agentVersion, result.protocolVersion);
             }
         })
-        CleanNotifications();
+        Dapp.CleanNotifications();
     },
 
     AddFileIPFS: function(file) {
@@ -147,7 +146,6 @@ window.Dapp = {
                 commands.parties_f(party_details)
             }
         })}
-
         if (commands.parties_addresses_f != null || commands.parties_f != null) {
             for (i=0; i < 2; i++) {
                 myLegalContract.partiesAddresses.call([i], function(error,response){
@@ -179,7 +177,6 @@ window.Dapp = {
                 }
             })
         }
-        // test contract address 0x9be5ad1be7f96e5337193c75f63362d9fd8d0426
     },
 
     ClickViewTab: function() {
@@ -191,9 +188,9 @@ window.Dapp = {
             data.status = Dapp.ConvertStatus(data.status)
             if(data.address == web3.eth.accounts[0]) {
                 document.getElementById("party1_view_column").innerHTML = "<p>My Address: " + data.address + "</p><p>Name: " + data.name + "</p><p>Email: " + data.email + "</p><p>Status: " + data.status + "</p>";
-             } else {
+            } else {
                 document.getElementById("party2_view_column").innerHTML = "<p>Their Address: " + data.address + "</p><p>Name: " + data.name + "</p><p>Email: " + data.email + "</p><p>Status: " + data.status + "</p>"
-             }
+            }
         }
         var fileupdates = function(data){ document.getElementById("document_view_details").innerHTML = "<p>Document Hash: " + data.filehash + "</p><p>Document Last Updated: " + data.last_updated + "</p><p>Document Version: " + data.version_number + "</p><p>To download the contract file, right click the link below, choose \"Save Link As\" and make sure to save the file name with the correct file format.</p><p></p><a href=\"https://ipfs.infura.io:5001/api/v0/cat?arg=" + data.filehash + "\">Document Link</a>" }
         var htmlupdates = { main_contract_f: contractupdates, parties_f: partiesupdates, parties_addresses_f: paddressesupdates, fileinfo_f: fileupdates }
@@ -208,9 +205,9 @@ window.Dapp = {
             data.status = Dapp.ConvertStatus(data.status)
             if(data.address == web3.eth.accounts[0]) {
                 document.getElementById("document_upload_status_p1").innerHTML = "<p>Our Status: " + data.status + " </p>"
-             } else {
+            } else {
                 document.getElementById("document_upload_status_p2").innerHTML = "<p>Their Status: " + data.status + " </p>"
-             }
+            }
         }
         document.getElementById("document_upload_status").innerHTML = "<p>Document Uploading is only allowed if both parties are <span id=\"nego\">Negotiating</span>. </p>";
         htmlupdates = { parties_f: partiesupdates }
@@ -219,6 +216,10 @@ window.Dapp = {
     },
 
     UploadContractFile: async function() {
+        if (document.getElementById("document_upload_status_p1").innerHTML.includes("Negotiating") == false || document.getElementById("document_upload_status_p2").innerHTML.includes("Negotiating") == false) {
+            console.log("both are not negotiating")
+            return alert("Both statuses must be Negotiating to upload a contract document.")
+        }
         var contractaddress = document.getElementById("contract_address").value;
         var TwoPartyLegalContract = web3.eth.contract(abiinterface);
         var TwoPartyLegalContract = TwoPartyLegalContract.at(contractaddress)
@@ -284,7 +285,6 @@ window.Dapp = {
 
 window.addEventListener("load", function() {
     ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'});
-    console.log("gas estimate for deploying contract are 666800 for deployment")
     Dapp.VerifyIPFS();
     Dapp.CleanNotifications();
     web3 = new Web3(window.web3.currentProvider)
