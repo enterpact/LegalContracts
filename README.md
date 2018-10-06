@@ -6,7 +6,7 @@ The application runs solely in the browser.  For each pending and current contra
 
 
 ## Tested Environments
-The development for this application has only been tested on **OSX** and the application has only been tested to run on **Google Chrome**.
+The development for this application has only been tested on **OSX** and the application has only been tested to run on **Google Chrome**.  This application also requires **Metamask**.
 
 
 ## Development
