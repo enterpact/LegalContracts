@@ -9,16 +9,31 @@ The application runs solely in the browser.  For each pending and current contra
 The development for this application has only been tested on **OSX** and the application has only been tested to run on **Google Chrome**.
 
 
-## Development
+## Setup Development Environment
+The following software must be installed.
+`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+`brew update;`
+    `brew upgrade;`
+    `brew tap ethereum/ethereum;`
+    `brew install ethereum;`
+    `brew install solidity;`
+    `brew install git;`
+    `brew install node;`
+    `brew install nmp;`
+    `npm install;`
+
+
+## Before testing Local Application code changes
 When developing for this application, you must run 2 commands before it can be deployed to a server.
 
-1.
-This command compiles the solidity code and application binary interface and then adds the binary code and abi it to the main javascript file dapp_module_final.js
-./migrate_solidity_code.sh  
+- This command compiles the solidity code and application binary interface and then adds the binary code and abi it to the main javascript file dapp_module_final.js `./migrate_solidity_code.sh`
+- This command packs up all the required javascript modules into one file which is then used by the webpage
+`webpack`
 
-2.
-This command packs up all the required javascript modules into one file which is then used by the webpage
-webpack
+## How to run tests
+Before running tests geth must be running in the Rinkeby network
+`geth --rinkeby --verbosity 0 console`
 
-
-
+To do a test run for the javascript code
+`karma start my.config.js --log-level debug --single-run`
