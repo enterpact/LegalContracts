@@ -19,6 +19,7 @@ contract TwoPartyLegalContract{
         bool signed;
         uint time_created;
         uint time_signed;
+        bool worldreadable;
     }
 
     struct contractDocument{
@@ -26,17 +27,19 @@ contract TwoPartyLegalContract{
         uint last_updated;
         string filehash;
     }
+    // make another struct which is a document version and includes time uploaded, comment, name, hash
 
-    contractAgreement public mainContract = contractAgreement("",false,block.timestamp,0);
-    contractDocument public contractFile = contractDocument(0,block.timestamp,"");
-    address[2] public partiesAddresses;
-    mapping (address => Party) public parties;
+    contractAgreement internal mainContract = contractAgreement("",false,block.timestamp,0,false);
+    contractDocument internal contractFile = contractDocument(0,block.timestamp,"");
+    address[2] internal partiesAddresses;
+    mapping (address => Party) internal parties;
     Status status;
 
-    constructor(address party1, address party2, string name, string filehash) public {
+    constructor(address party1, address party2, string name, string filehash, bool readable) public {
         /// @notice Initializes a TwoPartyLegalContract Contract
         //initializer function to initialize parties and main contract
         mainContract.name = name;
+        mainContract.worldreadable = readable;
         contractFile.filehash = filehash;
         partiesAddresses[0] = party1;
         partiesAddresses[1] = party2;
@@ -47,6 +50,29 @@ contract TwoPartyLegalContract{
     modifier onlyParties() {
         require(bytes(parties[msg.sender].name).length != 0, "You are not one of the parties on this contract");
         _;
+    }
+
+    modifier allreadable() {
+        if(mainContract.worldreadable == false){
+            require(bytes(parties[msg.sender].name).length != 0, "You are not one of the parties on this contract");
+        }
+        _;
+    }
+
+    function contractFile() public allreadable {
+        return contractFile;
+    }
+
+    function partiesAddresses(uint i) public allreadable {
+        return partiesAddresses[i];
+    }
+
+    function parties(address i) public allreadable {
+        return partiesAddresses[i];
+    }
+
+    function mainContract() public allreadable {
+        return mainContract;
     }
 
     function updateParty(address adr, string name, string email, Status p_status) onlyParties public returns(bool) {

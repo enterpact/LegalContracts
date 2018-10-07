@@ -217,7 +217,7 @@ window.Dapp = {
 
     UploadContractFile: async function() {
         if (document.getElementById("document_upload_status_p1").innerHTML.includes("Negotiating") == false || document.getElementById("document_upload_status_p2").innerHTML.includes("Negotiating") == false) {
-            console.log("both are not negotiating")
+            console.log("both are not negotiatingk)
             return alert("Both statuses must be Negotiating to upload a contract document.")
         }
         var contractaddress = document.getElementById("contract_address").value;
