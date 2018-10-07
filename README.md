@@ -4,6 +4,7 @@ The file that both people sign is uploaded to IPFS and can be downloaded from a 
 
 The application runs solely in the browser.  For each pending and current contract that both parties must sign, an Ethereum digital contract must be deployed.  
 
+![Screenshot](Screen_Shot_2018-10-07_at_9.30.22_AM.png)
 
 ## Tested Environments
 The development for this application has only been tested on **OSX** and the application has only been tested to run on **Google Chrome**.  This application also requires **Metamask**.
