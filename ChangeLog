@@ -1,0 +1,29 @@
+Current Version -> Version 2
+
+
+###### Version 1 #######
+$$ Features
+- Can sign an Ethereum Digital Contract only by 2 parties on an uploaded agreement file which gets stored on IPFS
+- Information stored and can be updated for each Party
+- Information stored on the uploaded agreement file
+- New agreement files can be uploaded as changes are made during negotiations
+- Ability to download the most current agreement file
+
+
+###### Version 2 ######
+
+$$ New Features
+- Ability to save multiple ipfs files and Ethereum file hashes
+- Ability to add comments and file name when a file is uploaded
+- View a version history of all old files in the order they were uploaded along with filename, comments, and IPFS download link
+- Make contract details viewable only to the 2 parties in the contract with a switch when deploying a contract
+- Refactor code for try catch and smaller methods using promises
+- Added version to Ethereum contract
+- Added Changelog
+- Made User Interface Changes
+
+
+$$ Bug Fixes
+-When others use dapp(from metamask) after user with permission the fields are not cleaned out
+-fixed bug where could upload to ipfs files not both in negotiating
+-Removed broken UI status updates
