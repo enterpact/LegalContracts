@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma  solidity ^0.4.24;
 
 /// @title TwoPartyLegalContract
 /// @author Mark Focella
@@ -19,34 +19,63 @@ contract TwoPartyLegalContract{
         bool signed;
         uint time_created;
         uint time_signed;
+        bool worldreadable;
+        uint currentdocumentversion;
     }
 
     struct contractDocument{
+        string name;
+        string comment;
         uint version_number;
         uint last_updated;
         string filehash;
     }
 
-    contractAgreement public mainContract = contractAgreement("",false,block.timestamp,0);
-    contractDocument public contractFile = contractDocument(0,block.timestamp,"");
-    address[2] public partiesAddresses;
-    mapping (address => Party) public parties;
-    Status status;
+    contractAgreement internal mainContract = contractAgreement("",false,block.timestamp,0,false,0);
+    contractDocument[] internal contractVersions;
+    address[2] internal partiesAddresses;
+    mapping (address => Party) internal parties;
+    Status internal status;
+    uint public leth_ContractVersion = 2;
 
-    constructor(address party1, address party2, string name, string filehash) public {
+    constructor(address party1, address party2, string name, string filehash, string filename, bool worldreadable) public {
         /// @notice Initializes a TwoPartyLegalContract Contract
         //initializer function to initialize parties and main contract
         mainContract.name = name;
-        contractFile.filehash = filehash;
+        mainContract.worldreadable = worldreadable;
+        contractVersions.push(contractDocument(filename,"Initial Document Uploaded during with Contract Creation",0,block.timestamp,filehash));
         partiesAddresses[0] = party1;
         partiesAddresses[1] = party2;
-        parties[partiesAddresses[0]] = Party("Name Me","",Status.negotiating);
-        parties[partiesAddresses[1]] = Party("Name Me","",Status.negotiating);
+        parties[partiesAddresses[0]] = Party("X","",Status.negotiating);
+        parties[partiesAddresses[1]] = Party("X","",Status.negotiating);
     }
 
     modifier onlyParties() {
         require(bytes(parties[msg.sender].name).length != 0, "You are not one of the parties on this contract");
         _;
+    }
+
+    modifier allreadable() {
+        if(mainContract.worldreadable == false){
+            require(bytes(parties[msg.sender].name).length != 0, "You are not one of the parties on this contract");
+        }
+        _;
+    }
+
+    function contractVersions_pub(uint i) public view allreadable returns(string,string,uint,uint,string){
+        return (contractVersions[i].name,contractVersions[i].comment,contractVersions[i].version_number,contractVersions[i].last_updated,contractVersions[i].filehash);
+    }
+
+    function partiesAddresses_pub() public view allreadable returns(address[2]) {
+        return partiesAddresses;
+    }
+
+    function parties_pub(address i) public view allreadable returns(string,string,Status){
+        return (parties[i].name,parties[i].email,parties[i].status);
+    }
+
+    function mainContract_pub() public view allreadable returns(string,bool,uint,bool,uint,uint) {
+        return (mainContract.name,mainContract.signed,mainContract.time_created,mainContract.worldreadable,mainContract.time_signed,mainContract.currentdocumentversion);
     }
 
     function updateParty(address adr, string name, string email, Status p_status) onlyParties public returns(bool) {
@@ -56,10 +85,10 @@ contract TwoPartyLegalContract{
         if (bytes(parties[adr].name).length == 0){
             parties[adr] = parties[msg.sender];
             if (msg.sender == partiesAddresses[0]) {
-                partiesAddresses[0] == adr;
+                partiesAddresses[0] = adr;
             }
             else {
-                partiesAddresses[1] == adr;
+                partiesAddresses[1] = adr;
             }
             delete parties[msg.sender];  //nullify old public address
         }
@@ -75,12 +104,12 @@ contract TwoPartyLegalContract{
         //do I need error handling here?
     }
 
-    function updateDocument(string hash) onlyParties public returns(bool){
+    function updateDocument(string hash, string filename, string comment) onlyParties public returns(bool){
         /// @notice Updates document hash, name and version number
         require (checkStatuses(Status.negotiating) == true, "Document is Locked.  Both Parties statuses are not negotiating");
-        contractFile.version_number += 1;
-        contractFile.last_updated = block.timestamp;
-        contractFile.filehash = hash;
+        mainContract.currentdocumentversion += 1;
+        uint versionnumber = mainContract.currentdocumentversion;
+        contractVersions.push(contractDocument(filename,comment,versionnumber,block.timestamp,hash));
         return true;
     }
 
@@ -93,3 +122,5 @@ contract TwoPartyLegalContract{
         return true;
     }
 }
+
+

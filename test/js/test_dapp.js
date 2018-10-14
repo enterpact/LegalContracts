@@ -6,6 +6,7 @@ var sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 var assert = chai.assert;
 
+
 beforeEach(function(){
     document.body.innerHTML = __html__['www/index.html'];
 });
@@ -15,7 +16,6 @@ afterEach(function(){
 
 describe('CleanNotifications()', function(){
     it('should remove text from notifications divs', function(){
-        //var html_fixturee = fixture.load('index.html');
         document.getElementById("update_notifications").innerHTML = "<p>HI</p>"
         document.getElementById("upload_notifications").innerHTML = "<p>HI</p>"
         Dapp.CleanNotifications();
@@ -39,17 +39,25 @@ describe('VerifyIPFS()', function(){
     })
 });
 
-describe('#AddFileIPFS(file)', function() {
-    it('file should exist on ipfs after getting added', function(){
-        var originalfile = Math.random().toString(36).substring(10);
-        var filehash = Dapp.AddFileIPFS(file)
-        var response
-        var ipfsfilecontents = $.get("https://ipfs.infura.io:5001/api/v0/get?arg=" + filehash, function (data){
-            response = data
-        })
-        assert.include(response,originalfile,"The file has been uploaded to IPFS.");
-    })
-});
+//describe('#AddFileIPFS(file)', function() {
+    //create below so it returns a promise and can use async await
+    //it('file should exist on ipfs after getting added', async function(){
+        //var originalfile = Math.random().toString(36).substring(10);
+        //var filehash = Dapp.AddFileIPFS(originalfile)
+        //setTimeout(function(filehash){
+            //ipfs.files.add(originalfile, onlyHash, function (err, files) {
+                //if (err){
+                //} else {
+                //var ipfsfilecontents = $.get("https://ipfs.infura.io:5001/api/v0/get?arg=" + filehash, function (data){
+                    //response = data
+                    //assert.include(response,originalfile,"The file has been uploaded to IPFS.");
+                //})
+                    //files[0].hash
+                //}
+            //})
+        //})
+//    })
+//});
 
 describe('#UseDataFromContract(cmds)', function() {
     it('should return contract data when given a correct mainContractAddress', function() {

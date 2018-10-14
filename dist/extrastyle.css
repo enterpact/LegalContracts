@@ -1,11 +1,13 @@
-
-
 #contract_name {
     padding-top: 6%;
 }
 
 #Parties_h5 {
     padding-top: 6%;
+}
+
+#previous_contracts_collapse {
+    padding-top: 8%;
 }
 
 h6.parties_h6 {
@@ -16,6 +18,10 @@ h6.parties_h6 {
     text-decoration: bold;
 }
 
+#download_hint {
+    color: lightgray;
+}
+
 #document_details_h5 {
     padding-top: 6%;
 }
@@ -24,14 +30,29 @@ h6.parties_h6 {
     color: orange;
 }
 
+#document_upload_status {
+    color: red;
+}
+
+#document_upload_status_p2 {
+    padding-bottom: 3%;
+}
+
 #update_on_click {
-    color: silver;
+    float: right;
+    color: lightblue;
 }
 
 #upload_on_click {
-    color: silver;
+    float: right;
+    color: lightblue;
+}
+
+#document_view_details {
+    padding-bottom: 10%;
 }
 
 #title {
     text-shadow: 1px 1px 1px #0000FF, 1px 2px 2px #FF0000;
+    padding-bottom: 4%;
 }
