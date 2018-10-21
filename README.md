@@ -2,6 +2,8 @@
 
 ![Screenshot](Screen_Shot_2018-10-07_at_9.30.22_AM.png)
 
+Please go here to use the application:  https://mfocella.github.io/www/index.html 
+
 This application was created so that two people or groups can sign a digital contract on the Ethereum blockchain without the need of a 3rd party.
 The file that both people sign is uploaded to IPFS and can be downloaded from a link listed when viewing the contract information.
 
