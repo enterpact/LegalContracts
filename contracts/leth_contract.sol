@@ -43,7 +43,7 @@ contract TwoPartyLegalContract{
         //initializer function to initialize parties and main contract
         mainContract.name = name;
         mainContract.worldreadable = worldreadable;
-        contractVersions.push(contractDocument(filename,"Initial Document Uploaded during with Contract Creation",0,block.timestamp,filehash));
+        contractVersions.push(contractDocument(filename,"Initial Document Uploaded with Contract Creation",0,block.timestamp,filehash));
         partiesAddresses[0] = party1;
         partiesAddresses[1] = party2;
         parties[partiesAddresses[0]] = Party("X","",Status.negotiating);
