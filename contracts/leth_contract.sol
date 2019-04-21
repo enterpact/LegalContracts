@@ -30,6 +30,8 @@ contract TwoPartyLegalContract{
         uint last_updated;
         string filehash;
     }
+    
+    event updatePartyDetails(address indexed party, string name, Status updatedstatus);
 
     contractAgreement internal mainContract = contractAgreement("",false,block.timestamp,0,false,0);
     contractDocument[] internal contractVersions;
@@ -100,6 +102,7 @@ contract TwoPartyLegalContract{
             mainContract.signed = true;
             mainContract.time_signed = block.timestamp;
         }
+        emit updatePartyDetails(msg.sender, name, p_status);
         return true;
         //do I need error handling here?
     }
