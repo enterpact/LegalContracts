@@ -1,4 +1,4 @@
-pragma  solidity ^0.4.24;
+pragma  solidity ^0.5.1;
 
 /// @title TwoPartyLegalContract
 /// @author Mark Focella
@@ -40,7 +40,7 @@ contract TwoPartyLegalContract{
     Status internal status;
     uint public leth_ContractVersion = 2;
 
-    constructor(address party1, address party2, string name, string filehash, string filename, bool worldreadable) public {
+    constructor(address party1, address party2, string memory name, string memory filehash, string memory filename, bool worldreadable)  public  {
         /// @notice Initializes a TwoPartyLegalContract Contract
         //initializer function to initialize parties and main contract
         mainContract.name = name;
@@ -64,23 +64,23 @@ contract TwoPartyLegalContract{
         _;
     }
 
-    function contractVersions_pub(uint i) public view allreadable returns(string,string,uint,uint,string){
+    function contractVersions_pub(uint i) public view allreadable returns(string memory,string memory,uint,uint,string memory){
         return (contractVersions[i].name,contractVersions[i].comment,contractVersions[i].version_number,contractVersions[i].last_updated,contractVersions[i].filehash);
     }
 
-    function partiesAddresses_pub() public view allreadable returns(address[2]) {
+    function partiesAddresses_pub() public view allreadable returns(address[2] memory) {
         return partiesAddresses;
     }
 
-    function parties_pub(address i) public view allreadable returns(string,string,Status){
+    function parties_pub(address i) public view allreadable returns(string memory,string memory,Status){
         return (parties[i].name,parties[i].email,parties[i].status);
     }
 
-    function mainContract_pub() public view allreadable returns(string,bool,uint,bool,uint,uint) {
+    function mainContract_pub() public view allreadable returns(string memory,bool,uint,bool,uint,uint) {
         return (mainContract.name,mainContract.signed,mainContract.time_created,mainContract.worldreadable,mainContract.time_signed,mainContract.currentdocumentversion);
     }
 
-    function updateParty(address adr, string name, string email, Status p_status) onlyParties public returns(bool) {
+    function updateParty(address adr, string memory name, string memory email, Status p_status) onlyParties public returns(bool) {
         /// @notice Updates address, name, email and status of a party
         require (bytes(name).length != 0, "The name must not be empty");
         require (mainContract.signed == false, "The contract has been signed no further modifications allowed");
@@ -107,7 +107,7 @@ contract TwoPartyLegalContract{
         //do I need error handling here?
     }
 
-    function updateDocument(string hash, string filename, string comment) onlyParties public returns(bool){
+    function updateDocument(string memory hash, string memory filename, string memory comment) onlyParties public returns(bool){
         /// @notice Updates document hash, name and version number
         require (checkStatuses(Status.negotiating) == true, "Document is Locked.  Both Parties statuses are not negotiating");
         mainContract.currentdocumentversion += 1;
@@ -125,5 +125,3 @@ contract TwoPartyLegalContract{
         return true;
     }
 }
-
-
