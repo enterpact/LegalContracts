@@ -43,4 +43,4 @@ Before running tests geth must be running in the Rinkeby network
 `geth --rinkeby --verbosity 0 console`
 
 To do a test run for the javascript code
-`karma start my.config.js --log-level debug --single-run`
+`karma start my.conf.js --log-level debug --single-run`
