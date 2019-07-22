@@ -25,8 +25,8 @@ The following software must be installed.
     `brew install solidity;`
     `brew install git;`
     `brew install node;`
-    `brew install nmp;`
-    `npm install;`
+    `brew install npm;`
+    `npm install -g;`
 
 
 ## Before testing Local Application code changes
@@ -35,6 +35,8 @@ When developing for this application, you must run 2 commands before it can be d
 - This command compiles the solidity code and application binary interface and then adds the binary code and abi it to the main javascript file dapp_module_final.js `./migrate_solidity_code.sh`
 - This command packs up all the required javascript modules into one file which is then used by the webpage
 `webpack`
+- This command initializes karma
+`karma init my.conf.js`
 
 ## How to run tests
 Before running tests geth must be running in the Rinkeby network
