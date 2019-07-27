@@ -30,8 +30,12 @@ module.exports = {
   'Check About page is visible when tab clicked' : function (browser) {
     browser.useXpath().click("//*[contains(text(),'About')]");
     browser.useCss().expect.element('#about').to.be.visible.before(100);
-    browser.end()
   },
+
+  'Check that Deploy New Contract shows up' : function (browser) {
+    browser.expect.element('#initialize_party1_address').to.have.text.which.equals("").before(800);
+    browser.end()
+  }
 
 
 
