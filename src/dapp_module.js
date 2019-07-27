@@ -193,7 +193,7 @@ window.Dapp = {
     },
 
     CreateContractInstance: function() {
-        var LegalContract = web3.eth.contract(abiinterface);
+        var LegalContract = new web3.eth.Contract(abiinterface);
         var mainContractAddress = document.getElementById("contract_address").value;
         var myLegalContract = LegalContract.at(mainContractAddress);
         return myLegalContract;
